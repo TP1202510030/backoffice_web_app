@@ -6,8 +6,7 @@ import { AppRoutes } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { name: "Dashboard", href: AppRoutes.DASHBOARD },
-  { name: "Compañías", href: AppRoutes.COMPANIES },
+  { name: "Empresas", href: AppRoutes.COMPANIES },
   { name: "Usuarios", href: AppRoutes.USERS },
 ];
 

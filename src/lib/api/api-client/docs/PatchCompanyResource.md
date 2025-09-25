@@ -1,21 +1,19 @@
-# UpdateCompanyResource
+# PatchCompanyResource
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**companyId** | **number** |  | [optional] [default to undefined]
 **companyName** | **string** |  | [optional] [default to undefined]
 **taxIdentificationNumber** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { UpdateCompanyResource } from './api';
+import { PatchCompanyResource } from './api';
 
-const instance: UpdateCompanyResource = {
-    companyId,
+const instance: PatchCompanyResource = {
     companyName,
     taxIdentificationNumber,
 };

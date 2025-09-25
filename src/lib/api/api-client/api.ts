@@ -83,19 +83,6 @@ export interface AuthenticatedUserResource {
 /**
  * 
  * @export
- * @interface CompanyName
- */
-export interface CompanyName {
-    /**
-     * 
-     * @type {string}
-     * @memberof CompanyName
-     */
-    'companyName'?: string;
-}
-/**
- * 
- * @export
  * @interface CompanyResource
  */
 export interface CompanyResource {
@@ -629,6 +616,79 @@ export type MeasurementResourceParameterEnum = typeof MeasurementResourceParamet
 /**
  * 
  * @export
+ * @interface PageCompanyResource
+ */
+export interface PageCompanyResource {
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'totalElements'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'totalPages'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'size'?: number;
+    /**
+     * 
+     * @type {Array<CompanyResource>}
+     * @memberof PageCompanyResource
+     */
+    'content'?: Array<CompanyResource>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'number'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageCompanyResource
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {PageableObject}
+     * @memberof PageCompanyResource
+     */
+    'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageCompanyResource
+     */
+    'first'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageCompanyResource
+     */
+    'last'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageCompanyResource
+     */
+    'empty'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface PageControlActionResource
  */
 export interface PageControlActionResource {
@@ -1031,6 +1091,25 @@ export interface ParameterThresholds {
 /**
  * 
  * @export
+ * @interface PatchCompanyResource
+ */
+export interface PatchCompanyResource {
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchCompanyResource
+     */
+    'companyName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PatchCompanyResource
+     */
+    'taxIdentificationNumber'?: number;
+}
+/**
+ * 
+ * @export
  * @interface PatchGrowRoomResource
  */
 export interface PatchGrowRoomResource {
@@ -1104,75 +1183,6 @@ export interface SortObject {
      * @memberof SortObject
      */
     'unsorted'?: boolean;
-}
-/**
- * 
- * @export
- * @interface TaxIdentificationNumber
- */
-export interface TaxIdentificationNumber {
-    /**
-     * 
-     * @type {number}
-     * @memberof TaxIdentificationNumber
-     */
-    'taxIdentificationNumber'?: number;
-}
-/**
- * 
- * @export
- * @interface UpdateCompanyResource
- */
-export interface UpdateCompanyResource {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateCompanyResource
-     */
-    'companyId'?: number;
-    /**
-     * 
-     * @type {CompanyName}
-     * @memberof UpdateCompanyResource
-     */
-    'companyName'?: CompanyName;
-    /**
-     * 
-     * @type {TaxIdentificationNumber}
-     * @memberof UpdateCompanyResource
-     */
-    'taxIdentificationNumber'?: TaxIdentificationNumber;
-}
-/**
- * 
- * @export
- * @interface UpdateGrowRoomResource
- */
-export interface UpdateGrowRoomResource {
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateGrowRoomResource
-     */
-    'id'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateGrowRoomResource
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateGrowRoomResource
-     */
-    'imageUrl'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateGrowRoomResource
-     */
-    'companyId'?: number;
 }
 /**
  * 
@@ -1419,6 +1429,93 @@ export const CompaniesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Deletes a company identified by the provided ID. This action will remove all associated data.
+         * @summary Delete a company by ID
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCompany: async (companyId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyId' is not null or undefined
+            assertParamExists('deleteCompany', 'companyId', companyId)
+            const localVarPath = `/api/v1/companies/{companyId}`
+                .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieves a list of paginated companies.
+         * @summary Get all companies
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCompanies: async (page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/companies`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieves a company by the provided ID.
          * @summary Get company by ID
          * @param {number} companyId 
@@ -1457,18 +1554,18 @@ export const CompaniesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Update company
-         * @summary Update company
+         * Updates one or more properties of a company. Only fields provided in the request body will be updated. This action is only available to administrators.
+         * @summary Patch a company
          * @param {number} companyId 
-         * @param {UpdateCompanyResource} updateCompanyResource 
+         * @param {PatchCompanyResource} patchCompanyResource 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCompany: async (companyId: number, updateCompanyResource: UpdateCompanyResource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCompany: async (companyId: number, patchCompanyResource: PatchCompanyResource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'companyId' is not null or undefined
-            assertParamExists('updateCompany', 'companyId', companyId)
-            // verify required parameter 'updateCompanyResource' is not null or undefined
-            assertParamExists('updateCompany', 'updateCompanyResource', updateCompanyResource)
+            assertParamExists('patchCompany', 'companyId', companyId)
+            // verify required parameter 'patchCompanyResource' is not null or undefined
+            assertParamExists('patchCompany', 'patchCompanyResource', patchCompanyResource)
             const localVarPath = `/api/v1/companies/{companyId}`
                 .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1478,7 +1575,7 @@ export const CompaniesApiAxiosParamCreator = function (configuration?: Configura
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1493,7 +1590,7 @@ export const CompaniesApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateCompanyResource, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(patchCompanyResource, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1524,6 +1621,34 @@ export const CompaniesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Deletes a company identified by the provided ID. This action will remove all associated data.
+         * @summary Delete a company by ID
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCompany(companyId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCompany(companyId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CompaniesApi.deleteCompany']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieves a list of paginated companies.
+         * @summary Get all companies
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllCompanies(page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllCompanies(page, size, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CompaniesApi.getAllCompanies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieves a company by the provided ID.
          * @summary Get company by ID
          * @param {number} companyId 
@@ -1537,17 +1662,17 @@ export const CompaniesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Update company
-         * @summary Update company
+         * Updates one or more properties of a company. Only fields provided in the request body will be updated. This action is only available to administrators.
+         * @summary Patch a company
          * @param {number} companyId 
-         * @param {UpdateCompanyResource} updateCompanyResource 
+         * @param {PatchCompanyResource} patchCompanyResource 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCompany(companyId: number, updateCompanyResource: UpdateCompanyResource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateCompany(companyId, updateCompanyResource, options);
+        async patchCompany(companyId: number, patchCompanyResource: PatchCompanyResource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCompany(companyId, patchCompanyResource, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompaniesApi.updateCompany']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompaniesApi.patchCompany']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1571,6 +1696,28 @@ export const CompaniesApiFactory = function (configuration?: Configuration, base
             return localVarFp.createCompany(createCompanyResource, options).then((request) => request(axios, basePath));
         },
         /**
+         * Deletes a company identified by the provided ID. This action will remove all associated data.
+         * @summary Delete a company by ID
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCompany(companyId: number, options?: RawAxiosRequestConfig): AxiosPromise<CompanyResource> {
+            return localVarFp.deleteCompany(companyId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieves a list of paginated companies.
+         * @summary Get all companies
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCompanies(page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<CompanyResource> {
+            return localVarFp.getAllCompanies(page, size, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieves a company by the provided ID.
          * @summary Get company by ID
          * @param {number} companyId 
@@ -1581,15 +1728,15 @@ export const CompaniesApiFactory = function (configuration?: Configuration, base
             return localVarFp.getCompanyById(companyId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Update company
-         * @summary Update company
+         * Updates one or more properties of a company. Only fields provided in the request body will be updated. This action is only available to administrators.
+         * @summary Patch a company
          * @param {number} companyId 
-         * @param {UpdateCompanyResource} updateCompanyResource 
+         * @param {PatchCompanyResource} patchCompanyResource 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCompany(companyId: number, updateCompanyResource: UpdateCompanyResource, options?: RawAxiosRequestConfig): AxiosPromise<CompanyResource> {
-            return localVarFp.updateCompany(companyId, updateCompanyResource, options).then((request) => request(axios, basePath));
+        patchCompany(companyId: number, patchCompanyResource: PatchCompanyResource, options?: RawAxiosRequestConfig): AxiosPromise<CompanyResource> {
+            return localVarFp.patchCompany(companyId, patchCompanyResource, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1614,6 +1761,32 @@ export class CompaniesApi extends BaseAPI {
     }
 
     /**
+     * Deletes a company identified by the provided ID. This action will remove all associated data.
+     * @summary Delete a company by ID
+     * @param {number} companyId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompaniesApi
+     */
+    public deleteCompany(companyId: number, options?: RawAxiosRequestConfig) {
+        return CompaniesApiFp(this.configuration).deleteCompany(companyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieves a list of paginated companies.
+     * @summary Get all companies
+     * @param {number} [page] Zero-based page index (0..N)
+     * @param {number} [size] The size of the page to be returned
+     * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompaniesApi
+     */
+    public getAllCompanies(page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig) {
+        return CompaniesApiFp(this.configuration).getAllCompanies(page, size, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Retrieves a company by the provided ID.
      * @summary Get company by ID
      * @param {number} companyId 
@@ -1626,16 +1799,16 @@ export class CompaniesApi extends BaseAPI {
     }
 
     /**
-     * Update company
-     * @summary Update company
+     * Updates one or more properties of a company. Only fields provided in the request body will be updated. This action is only available to administrators.
+     * @summary Patch a company
      * @param {number} companyId 
-     * @param {UpdateCompanyResource} updateCompanyResource 
+     * @param {PatchCompanyResource} patchCompanyResource 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompaniesApi
      */
-    public updateCompany(companyId: number, updateCompanyResource: UpdateCompanyResource, options?: RawAxiosRequestConfig) {
-        return CompaniesApiFp(this.configuration).updateCompany(companyId, updateCompanyResource, options).then((request) => request(this.axios, this.basePath));
+    public patchCompany(companyId: number, patchCompanyResource: PatchCompanyResource, options?: RawAxiosRequestConfig) {
+        return CompaniesApiFp(this.configuration).patchCompany(companyId, patchCompanyResource, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2635,7 +2808,7 @@ export const GrowRoomsApiAxiosParamCreator = function (configuration?: Configura
         deleteGrowRoom: async (growRoomId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'growRoomId' is not null or undefined
             assertParamExists('deleteGrowRoom', 'growRoomId', growRoomId)
-            const localVarPath = `/api/v1/{growRoomId}`
+            const localVarPath = `/api/v1/grow-rooms/{growRoomId}`
                 .replace(`{${"growRoomId"}}`, encodeURIComponent(String(growRoomId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2767,7 +2940,7 @@ export const GrowRoomsApiAxiosParamCreator = function (configuration?: Configura
             assertParamExists('patchGrowRoom', 'growRoomId', growRoomId)
             // verify required parameter 'patchGrowRoomResource' is not null or undefined
             assertParamExists('patchGrowRoom', 'patchGrowRoomResource', patchGrowRoomResource)
-            const localVarPath = `/api/v1/{growRoomId}`
+            const localVarPath = `/api/v1/grow-rooms/{growRoomId}`
                 .replace(`{${"growRoomId"}}`, encodeURIComponent(String(growRoomId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2792,50 +2965,6 @@ export const GrowRoomsApiAxiosParamCreator = function (configuration?: Configura
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(patchGrowRoomResource, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update grow room
-         * @summary Update grow room
-         * @param {number} growRoomId 
-         * @param {UpdateGrowRoomResource} updateGrowRoomResource 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateGrowRoom: async (growRoomId: number, updateGrowRoomResource: UpdateGrowRoomResource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'growRoomId' is not null or undefined
-            assertParamExists('updateGrowRoom', 'growRoomId', growRoomId)
-            // verify required parameter 'updateGrowRoomResource' is not null or undefined
-            assertParamExists('updateGrowRoom', 'updateGrowRoomResource', updateGrowRoomResource)
-            const localVarPath = `/api/v1/grow-rooms/{growRoomId}`
-                .replace(`{${"growRoomId"}}`, encodeURIComponent(String(growRoomId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateGrowRoomResource, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2922,20 +3051,6 @@ export const GrowRoomsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['GrowRoomsApi.patchGrowRoom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Update grow room
-         * @summary Update grow room
-         * @param {number} growRoomId 
-         * @param {UpdateGrowRoomResource} updateGrowRoomResource 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateGrowRoom(growRoomId: number, updateGrowRoomResource: UpdateGrowRoomResource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GrowRoomResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateGrowRoom(growRoomId, updateGrowRoomResource, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GrowRoomsApi.updateGrowRoom']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -3000,17 +3115,6 @@ export const GrowRoomsApiFactory = function (configuration?: Configuration, base
          */
         patchGrowRoom(growRoomId: number, patchGrowRoomResource: PatchGrowRoomResource, options?: RawAxiosRequestConfig): AxiosPromise<GrowRoomResource> {
             return localVarFp.patchGrowRoom(growRoomId, patchGrowRoomResource, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Update grow room
-         * @summary Update grow room
-         * @param {number} growRoomId 
-         * @param {UpdateGrowRoomResource} updateGrowRoomResource 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateGrowRoom(growRoomId: number, updateGrowRoomResource: UpdateGrowRoomResource, options?: RawAxiosRequestConfig): AxiosPromise<GrowRoomResource> {
-            return localVarFp.updateGrowRoom(growRoomId, updateGrowRoomResource, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3085,19 +3189,6 @@ export class GrowRoomsApi extends BaseAPI {
      */
     public patchGrowRoom(growRoomId: number, patchGrowRoomResource: PatchGrowRoomResource, options?: RawAxiosRequestConfig) {
         return GrowRoomsApiFp(this.configuration).patchGrowRoom(growRoomId, patchGrowRoomResource, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Update grow room
-     * @summary Update grow room
-     * @param {number} growRoomId 
-     * @param {UpdateGrowRoomResource} updateGrowRoomResource 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GrowRoomsApi
-     */
-    public updateGrowRoom(growRoomId: number, updateGrowRoomResource: UpdateGrowRoomResource, options?: RawAxiosRequestConfig) {
-        return GrowRoomsApiFp(this.configuration).updateGrowRoom(growRoomId, updateGrowRoomResource, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3465,6 +3556,44 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Delete the user with the given id. This endpoint is for admin use only.
+         * @summary Delete a user by id
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser: async (userId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deleteUser', 'userId', userId)
+            const localVarPath = `/api/v1/users/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all the users available in the system.
          * @summary Get all users
          * @param {*} [options] Override http request option.
@@ -3560,6 +3689,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Delete the user with the given id. This endpoint is for admin use only.
+         * @summary Delete a user by id
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteUser(userId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.deleteUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get all the users available in the system.
          * @summary Get all users
          * @param {*} [options] Override http request option.
@@ -3605,6 +3747,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.createUser(createUserResource, options).then((request) => request(axios, basePath));
         },
         /**
+         * Delete the user with the given id. This endpoint is for admin use only.
+         * @summary Delete a user by id
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteUser(userId: number, options?: RawAxiosRequestConfig): AxiosPromise<UserResource> {
+            return localVarFp.deleteUser(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get all the users available in the system.
          * @summary Get all users
          * @param {*} [options] Override http request option.
@@ -3643,6 +3795,18 @@ export class UsersApi extends BaseAPI {
      */
     public createUser(createUserResource: CreateUserResource, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).createUser(createUserResource, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the user with the given id. This endpoint is for admin use only.
+     * @summary Delete a user by id
+     * @param {number} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public deleteUser(userId: number, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).deleteUser(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

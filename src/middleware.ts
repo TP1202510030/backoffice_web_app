@@ -15,8 +15,8 @@ export function middleware(request: NextRequest) {
   }
 
   if (authToken && pathname.startsWith(AppRoutes.LOGIN)) {
-    const dashboardUrl = new URL(AppRoutes.DASHBOARD, request.url);
-    return NextResponse.redirect(dashboardUrl);
+    const redirectUrl = new URL(AppRoutes.COMPANIES, request.url);
+    return NextResponse.redirect(redirectUrl);
   }
 
   return NextResponse.next();
