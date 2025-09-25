@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { CreateGrowRoomResource, GrowRoomResource } from "@/lib/api/api-client";
+import { GrowRoomResource } from "@/lib/api/api-client";
 
 const formSchema = z.object({
   name: z.string().min(1, "El nombre es requerido."),

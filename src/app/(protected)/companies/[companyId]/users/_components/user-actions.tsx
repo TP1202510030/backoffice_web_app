@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyResource } from "@/lib/api/api-client";
+import { UserResource } from "@/lib/api/api-client";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,24 +22,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import { AppRoutes } from "@/lib/constants";
-import { useDeleteCompany } from "@/hooks/use-delete-company";
+import { useDeleteUser } from "@/hooks/use-delete-user";
 
-interface CompanyActionsProps {
-  company: CompanyResource;
+interface UserActionsProps {
+  user: UserResource;
   onEdit: () => void;
 }
 
-export function CompanyActions({ company, onEdit }: CompanyActionsProps) {
-  const router = useRouter();
-  const deleteMutation = useDeleteCompany();
-
-  const handleNavigate = (path: string) => {
-    if (company.id) {
-      router.push(path);
-    }
-  };
+export function UserActions({ user, onEdit }: UserActionsProps) {
+  const deleteMutation = useDeleteUser();
 
   return (
     <AlertDialog>
@@ -54,21 +45,6 @@ export function CompanyActions({ company, onEdit }: CompanyActionsProps) {
           <DropdownMenuLabel>Acciones</DropdownMenuLabel>
           <DropdownMenuItem onClick={onEdit}>Editar</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() =>
-              handleNavigate(AppRoutes.COMPANIES_GROW_ROOMS(company.id!))
-            }
-          >
-            Ver Naves de Cultivo
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() =>
-              handleNavigate(AppRoutes.COMPANIES_USERS(company.id!))
-            }
-          >
-            Ver Usuarios
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <AlertDialogTrigger asChild>
             <DropdownMenuItem className="text-red-600">
               Eliminar
@@ -81,14 +57,14 @@ export function CompanyActions({ company, onEdit }: CompanyActionsProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
           <AlertDialogDescription>
-            Esta acción no se puede deshacer. Esto eliminará permanentemente la
-            empresa y todos sus datos asociados.
+            Esta acción no se puede deshacer. Esto eliminará permanentemente al
+            usuario.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => deleteMutation.mutate(company.id!)}
+            onClick={() => deleteMutation.mutate(user.id!)}
             disabled={deleteMutation.isPending}
           >
             {deleteMutation.isPending ? "Eliminando..." : "Continuar"}

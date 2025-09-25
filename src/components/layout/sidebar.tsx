@@ -5,10 +5,7 @@ import { usePathname } from "next/navigation";
 import { AppRoutes } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const navigation = [
-  { name: "Empresas", href: AppRoutes.COMPANIES },
-  { name: "Usuarios", href: AppRoutes.USERS },
-];
+const navigation = [{ name: "Empresas", href: AppRoutes.COMPANIES }];
 
 export function Sidebar() {
   const pathname = usePathname();

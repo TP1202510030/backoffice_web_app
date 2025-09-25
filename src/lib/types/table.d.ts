@@ -5,5 +5,6 @@ declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
     onEditCompany?: (company: CompanyResource) => void;
     onEditGrowRoom?: (growRoom: GrowRoomResource) => void;
+    onEditUser?: (user: UserResource) => void;
   }
 }

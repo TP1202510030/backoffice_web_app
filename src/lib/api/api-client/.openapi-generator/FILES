@@ -37,6 +37,9 @@ docs/PageableObject.md
 docs/ParameterThresholds.md
 docs/PatchCompanyResource.md
 docs/PatchGrowRoomResource.md
+docs/PatchUserResource.md
+docs/RoleResource.md
+docs/RolesApi.md
 docs/SignInResource.md
 docs/SortObject.md
 docs/UserResource.md

@@ -663,12 +663,6 @@ export interface PageCompanyResource {
     'pageable'?: PageableObject;
     /**
      * 
-     * @type {number}
-     * @memberof PageCompanyResource
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof PageCompanyResource
      */
@@ -679,6 +673,12 @@ export interface PageCompanyResource {
      * @memberof PageCompanyResource
      */
     'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -736,12 +736,6 @@ export interface PageControlActionResource {
     'pageable'?: PageableObject;
     /**
      * 
-     * @type {number}
-     * @memberof PageControlActionResource
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof PageControlActionResource
      */
@@ -752,6 +746,12 @@ export interface PageControlActionResource {
      * @memberof PageControlActionResource
      */
     'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageControlActionResource
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -809,12 +809,6 @@ export interface PageCropResource {
     'pageable'?: PageableObject;
     /**
      * 
-     * @type {number}
-     * @memberof PageCropResource
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof PageCropResource
      */
@@ -825,6 +819,12 @@ export interface PageCropResource {
      * @memberof PageCropResource
      */
     'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCropResource
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -882,12 +882,6 @@ export interface PageGrowRoomResource {
     'pageable'?: PageableObject;
     /**
      * 
-     * @type {number}
-     * @memberof PageGrowRoomResource
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof PageGrowRoomResource
      */
@@ -898,6 +892,12 @@ export interface PageGrowRoomResource {
      * @memberof PageGrowRoomResource
      */
     'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageGrowRoomResource
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -955,12 +955,6 @@ export interface PageMeasurementResource {
     'pageable'?: PageableObject;
     /**
      * 
-     * @type {number}
-     * @memberof PageMeasurementResource
-     */
-    'numberOfElements'?: number;
-    /**
-     * 
      * @type {boolean}
      * @memberof PageMeasurementResource
      */
@@ -971,6 +965,12 @@ export interface PageMeasurementResource {
      * @memberof PageMeasurementResource
      */
     'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMeasurementResource
+     */
+    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -1125,6 +1125,44 @@ export interface PatchGrowRoomResource {
      * @memberof PatchGrowRoomResource
      */
     'imageUrl'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PatchUserResource
+ */
+export interface PatchUserResource {
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchUserResource
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PatchUserResource
+     */
+    'roles'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface RoleResource
+ */
+export interface RoleResource {
+    /**
+     * 
+     * @type {number}
+     * @memberof RoleResource
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleResource
+     */
+    'name'?: string;
 }
 /**
  * 
@@ -3510,6 +3548,111 @@ export class MeasurementsApi extends BaseAPI {
 
 
 /**
+ * RolesApi - axios parameter creator
+ * @export
+ */
+export const RolesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get all roles.
+         * @summary Get all roles
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRoles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/roles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RolesApi - functional programming interface
+ * @export
+ */
+export const RolesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RolesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get all roles.
+         * @summary Get all roles
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllRoles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleResource>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllRoles(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.getAllRoles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RolesApi - factory interface
+ * @export
+ */
+export const RolesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RolesApiFp(configuration)
+    return {
+        /**
+         * Get all roles.
+         * @summary Get all roles
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRoles(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleResource>> {
+            return localVarFp.getAllRoles(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RolesApi - object-oriented interface
+ * @export
+ * @class RolesApi
+ * @extends {BaseAPI}
+ */
+export class RolesApi extends BaseAPI {
+    /**
+     * Get all roles.
+     * @summary Get all roles
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public getAllRoles(options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).getAllRoles(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * UsersApi - axios parameter creator
  * @export
  */
@@ -3628,6 +3771,44 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Get all users associated with the given company id.
+         * @summary Get all users by company id
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllUsersByCompanyId: async (companyId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyId' is not null or undefined
+            assertParamExists('getAllUsersByCompanyId', 'companyId', companyId)
+            const localVarPath = `/api/v1/companies/{companyId}/users`
+                .replace(`{${"companyId"}}`, encodeURIComponent(String(companyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get the user with the given id.
          * @summary Get user by id
          * @param {number} userId 
@@ -3659,6 +3840,50 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Patch a user by the provided id.
+         * @summary Patch user by id
+         * @param {number} userId 
+         * @param {PatchUserResource} patchUserResource 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUser: async (userId: number, patchUserResource: PatchUserResource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('patchUser', 'userId', userId)
+            // verify required parameter 'patchUserResource' is not null or undefined
+            assertParamExists('patchUser', 'patchUserResource', patchUserResource)
+            const localVarPath = `/api/v1/users/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(patchUserResource, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3714,6 +3939,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Get all users associated with the given company id.
+         * @summary Get all users by company id
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserResource>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsersByCompanyId(companyId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.getAllUsersByCompanyId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get the user with the given id.
          * @summary Get user by id
          * @param {number} userId 
@@ -3724,6 +3962,20 @@ export const UsersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserById(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.getUserById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Patch a user by the provided id.
+         * @summary Patch user by id
+         * @param {number} userId 
+         * @param {PatchUserResource} patchUserResource 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchUser(userId: number, patchUserResource: PatchUserResource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(userId, patchUserResource, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.patchUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -3766,6 +4018,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getAllUsers(options).then((request) => request(axios, basePath));
         },
         /**
+         * Get all users associated with the given company id.
+         * @summary Get all users by company id
+         * @param {number} companyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserResource>> {
+            return localVarFp.getAllUsersByCompanyId(companyId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get the user with the given id.
          * @summary Get user by id
          * @param {number} userId 
@@ -3774,6 +4036,17 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         getUserById(userId: number, options?: RawAxiosRequestConfig): AxiosPromise<UserResource> {
             return localVarFp.getUserById(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Patch a user by the provided id.
+         * @summary Patch user by id
+         * @param {number} userId 
+         * @param {PatchUserResource} patchUserResource 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUser(userId: number, patchUserResource: PatchUserResource, options?: RawAxiosRequestConfig): AxiosPromise<UserResource> {
+            return localVarFp.patchUser(userId, patchUserResource, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3821,6 +4094,18 @@ export class UsersApi extends BaseAPI {
     }
 
     /**
+     * Get all users associated with the given company id.
+     * @summary Get all users by company id
+     * @param {number} companyId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getAllUsersByCompanyId(companyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Get the user with the given id.
      * @summary Get user by id
      * @param {number} userId 
@@ -3830,6 +4115,19 @@ export class UsersApi extends BaseAPI {
      */
     public getUserById(userId: number, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).getUserById(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Patch a user by the provided id.
+     * @summary Patch user by id
+     * @param {number} userId 
+     * @param {PatchUserResource} patchUserResource 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public patchUser(userId: number, patchUserResource: PatchUserResource, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).patchUser(userId, patchUserResource, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

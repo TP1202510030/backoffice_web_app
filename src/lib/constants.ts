@@ -25,5 +25,5 @@ export const AppRoutes = {
   COMPANIES: "/companies",
   COMPANIES_GROW_ROOMS: (companyId: number) =>
     `/companies/${companyId}/grow-rooms`,
-  USERS: "/users",
+  COMPANIES_USERS: (companyId: number) => `/companies/${companyId}/users`,
 };

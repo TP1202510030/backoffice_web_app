@@ -7,7 +7,9 @@ All URIs are relative to *http://localhost:3000*
 |[**createUser**](#createuser) | **POST** /api/v1/users | Create a new user for a company|
 |[**deleteUser**](#deleteuser) | **DELETE** /api/v1/users/{userId} | Delete a user by id|
 |[**getAllUsers**](#getallusers) | **GET** /api/v1/users | Get all users|
+|[**getAllUsersByCompanyId**](#getallusersbycompanyid) | **GET** /api/v1/companies/{companyId}/users | Get all users by company id|
 |[**getUserById**](#getuserbyid) | **GET** /api/v1/users/{userId} | Get user by id|
+|[**patchUser**](#patchuser) | **PATCH** /api/v1/users/{userId} | Patch user by id|
 
 # **createUser**
 > UserResource createUser(createUserResource)
@@ -159,6 +161,57 @@ This endpoint does not have any parameters.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getAllUsersByCompanyId**
+> Array<UserResource> getAllUsersByCompanyId()
+
+Get all users associated with the given company id.
+
+### Example
+
+```typescript
+import {
+    UsersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UsersApi(configuration);
+
+let companyId: number; // (default to undefined)
+
+const { status, data } = await apiInstance.getAllUsersByCompanyId(
+    companyId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **companyId** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+**Array<UserResource>**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getUserById**
 > UserResource getUserById()
 
@@ -209,6 +262,61 @@ const { status, data } = await apiInstance.getUserById(
 |**200** | User retrieved successfully. |  -  |
 |**404** | User not found. |  -  |
 |**401** | Unauthorized. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **patchUser**
+> UserResource patchUser(patchUserResource)
+
+Patch a user by the provided id.
+
+### Example
+
+```typescript
+import {
+    UsersApi,
+    Configuration,
+    PatchUserResource
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UsersApi(configuration);
+
+let userId: number; // (default to undefined)
+let patchUserResource: PatchUserResource; //
+
+const { status, data } = await apiInstance.patchUser(
+    userId,
+    patchUserResource
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **patchUserResource** | **PatchUserResource**|  | |
+| **userId** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+**UserResource**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
