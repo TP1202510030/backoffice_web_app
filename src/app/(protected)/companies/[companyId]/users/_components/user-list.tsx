@@ -3,12 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
-import { UserResource } from "@/lib/api/api-client";
+import { PageUserResource, UserResource } from "@/lib/api/api-client";
 import { usersApi } from "@/lib/api";
 import { DataTableSkeleton } from "@/components/ui/data-table-skeleton";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { UserDialog } from "./user-dialog";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 interface UserListProps {
   companyId: number;
@@ -20,11 +21,22 @@ export function UserList({ companyId }: UserListProps) {
     null
   );
 
-  const { data, isLoading, isError, error } = useQuery<UserResource[]>({
-    queryKey: ["users", companyId],
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const page = Number(searchParams.get("page")) || 0;
+  const size = Number(searchParams.get("size")) || 10;
+
+  const { data, isLoading, isError, error } = useQuery<PageUserResource>({
+    queryKey: ["users", companyId, page, size],
     queryFn: async () => {
-      const response = await usersApi.getAllUsersByCompanyId(companyId);
-      return response.data;
+      const response = await usersApi.getAllUsersByCompanyId(
+        companyId,
+        page,
+        size
+      );
+      return response.data as unknown as PageUserResource;
     },
     retry: false,
   });
@@ -39,6 +51,12 @@ export function UserList({ companyId }: UserListProps) {
     setEditingUser(null);
   };
 
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", String(newPage));
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   if (isLoading) {
     return <DataTableSkeleton />;
   }
@@ -47,7 +65,8 @@ export function UserList({ companyId }: UserListProps) {
     return <div>Error: {error.message}</div>;
   }
 
-  const users = data || [];
+  const users = data?.content || [];
+  const pageCount = data?.totalPages || 0;
 
   return (
     <>
@@ -58,6 +77,9 @@ export function UserList({ companyId }: UserListProps) {
         columns={columns}
         data={users}
         meta={{ onEditUser: openModal }}
+        pageCount={pageCount}
+        onPageChange={handlePageChange}
+        currentPage={page}
       />
       <UserDialog
         companyId={companyId}

@@ -1,4 +1,4 @@
-# PageMeasurementResource
+# PageUserResource
 
 
 ## Properties
@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **totalElements** | **number** |  | [optional] [default to undefined]
 **totalPages** | **number** |  | [optional] [default to undefined]
 **size** | **number** |  | [optional] [default to undefined]
-**content** | [**Array&lt;MeasurementResource&gt;**](MeasurementResource.md) |  | [optional] [default to undefined]
+**content** | [**Array&lt;UserResource&gt;**](UserResource.md) |  | [optional] [default to undefined]
 **number** | **number** |  | [optional] [default to undefined]
 **sort** | [**SortObject**](SortObject.md) |  | [optional] [default to undefined]
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] [default to undefined]
@@ -20,9 +20,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { PageMeasurementResource } from './api';
+import { PageUserResource } from './api';
 
-const instance: PageMeasurementResource = {
+const instance: PageUserResource = {
     totalElements,
     totalPages,
     size,

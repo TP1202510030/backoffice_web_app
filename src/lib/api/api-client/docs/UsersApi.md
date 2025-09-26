@@ -162,7 +162,7 @@ This endpoint does not have any parameters.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllUsersByCompanyId**
-> Array<UserResource> getAllUsersByCompanyId()
+> PageUserResource getAllUsersByCompanyId()
 
 Get all users associated with the given company id.
 
@@ -178,9 +178,15 @@ const configuration = new Configuration();
 const apiInstance = new UsersApi(configuration);
 
 let companyId: number; // (default to undefined)
+let page: number; //Zero-based page index (0..N) (optional) (default to 0)
+let size: number; //The size of the page to be returned (optional) (default to 20)
+let sort: Array<string>; //Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.getAllUsersByCompanyId(
-    companyId
+    companyId,
+    page,
+    size,
+    sort
 );
 ```
 
@@ -189,11 +195,14 @@ const { status, data } = await apiInstance.getAllUsersByCompanyId(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **companyId** | [**number**] |  | defaults to undefined|
+| **page** | [**number**] | Zero-based page index (0..N) | (optional) defaults to 0|
+| **size** | [**number**] | The size of the page to be returned | (optional) defaults to 20|
+| **sort** | **Array&lt;string&gt;** | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | (optional) defaults to undefined|
 
 
 ### Return type
 
-**Array<UserResource>**
+**PageUserResource**
 
 ### Authorization
 

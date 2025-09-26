@@ -663,6 +663,12 @@ export interface PageCompanyResource {
     'pageable'?: PageableObject;
     /**
      * 
+     * @type {number}
+     * @memberof PageCompanyResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PageCompanyResource
      */
@@ -673,12 +679,6 @@ export interface PageCompanyResource {
      * @memberof PageCompanyResource
      */
     'last'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCompanyResource
-     */
-    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -736,6 +736,12 @@ export interface PageControlActionResource {
     'pageable'?: PageableObject;
     /**
      * 
+     * @type {number}
+     * @memberof PageControlActionResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PageControlActionResource
      */
@@ -746,12 +752,6 @@ export interface PageControlActionResource {
      * @memberof PageControlActionResource
      */
     'last'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageControlActionResource
-     */
-    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -809,6 +809,12 @@ export interface PageCropResource {
     'pageable'?: PageableObject;
     /**
      * 
+     * @type {number}
+     * @memberof PageCropResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PageCropResource
      */
@@ -819,12 +825,6 @@ export interface PageCropResource {
      * @memberof PageCropResource
      */
     'last'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCropResource
-     */
-    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -882,6 +882,12 @@ export interface PageGrowRoomResource {
     'pageable'?: PageableObject;
     /**
      * 
+     * @type {number}
+     * @memberof PageGrowRoomResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PageGrowRoomResource
      */
@@ -892,12 +898,6 @@ export interface PageGrowRoomResource {
      * @memberof PageGrowRoomResource
      */
     'last'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageGrowRoomResource
-     */
-    'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
@@ -955,6 +955,12 @@ export interface PageMeasurementResource {
     'pageable'?: PageableObject;
     /**
      * 
+     * @type {number}
+     * @memberof PageMeasurementResource
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof PageMeasurementResource
      */
@@ -967,14 +973,81 @@ export interface PageMeasurementResource {
     'last'?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof PageMeasurementResource
+     */
+    'empty'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PageUserResource
+ */
+export interface PageUserResource {
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserResource
+     */
+    'totalElements'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserResource
+     */
+    'totalPages'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserResource
+     */
+    'size'?: number;
+    /**
+     * 
+     * @type {Array<UserResource>}
+     * @memberof PageUserResource
+     */
+    'content'?: Array<UserResource>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserResource
+     */
+    'number'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageUserResource
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {PageableObject}
+     * @memberof PageUserResource
+     */
+    'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserResource
      */
     'numberOfElements'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof PageMeasurementResource
+     * @memberof PageUserResource
+     */
+    'first'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageUserResource
+     */
+    'last'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageUserResource
      */
     'empty'?: boolean;
 }
@@ -3774,10 +3847,13 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * Get all users associated with the given company id.
          * @summary Get all users by company id
          * @param {number} companyId 
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllUsersByCompanyId: async (companyId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllUsersByCompanyId: async (companyId: number, page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'companyId' is not null or undefined
             assertParamExists('getAllUsersByCompanyId', 'companyId', companyId)
             const localVarPath = `/api/v1/companies/{companyId}/users`
@@ -3796,6 +3872,18 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter['sort'] = sort;
+            }
 
 
     
@@ -3942,11 +4030,14 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * Get all users associated with the given company id.
          * @summary Get all users by company id
          * @param {number} companyId 
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserResource>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsersByCompanyId(companyId, options);
+        async getAllUsersByCompanyId(companyId: number, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageUserResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsersByCompanyId(companyId, page, size, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.getAllUsersByCompanyId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4021,11 +4112,14 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * Get all users associated with the given company id.
          * @summary Get all users by company id
          * @param {number} companyId 
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<UserResource>> {
-            return localVarFp.getAllUsersByCompanyId(companyId, options).then((request) => request(axios, basePath));
+        getAllUsersByCompanyId(companyId: number, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<PageUserResource> {
+            return localVarFp.getAllUsersByCompanyId(companyId, page, size, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * Get the user with the given id.
@@ -4097,12 +4191,15 @@ export class UsersApi extends BaseAPI {
      * Get all users associated with the given company id.
      * @summary Get all users by company id
      * @param {number} companyId 
+     * @param {number} [page] Zero-based page index (0..N)
+     * @param {number} [size] The size of the page to be returned
+     * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getAllUsersByCompanyId(companyId: number, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getAllUsersByCompanyId(companyId, options).then((request) => request(this.axios, this.basePath));
+    public getAllUsersByCompanyId(companyId: number, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getAllUsersByCompanyId(companyId, page, size, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

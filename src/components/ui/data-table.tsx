@@ -4,11 +4,11 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   TableMeta,
   useReactTable,
+  PaginationState,
 } from "@tanstack/react-table";
 
 import {
@@ -26,26 +26,42 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   meta?: TableMeta<TData>;
+  pageCount?: number;
+  onPageChange?: (page: number) => void;
+  currentPage?: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   meta,
+  pageCount,
+  onPageChange,
+  currentPage = 0,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  const pagination = React.useMemo<PaginationState>(
+    () => ({
+      pageIndex: currentPage,
+      pageSize: 10,
+    }),
+    [currentPage]
+  );
 
   const table = useReactTable({
     data,
     columns,
+    pageCount,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      pagination,
     },
     meta,
+    manualPagination: true,
   });
 
   return (
@@ -104,7 +120,10 @@ export function DataTable<TData, TValue>({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
+          onClick={() =>
+            onPageChange &&
+            onPageChange(table.getState().pagination.pageIndex - 1)
+          }
           disabled={!table.getCanPreviousPage()}
         >
           Anterior
@@ -112,7 +131,10 @@ export function DataTable<TData, TValue>({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
+          onClick={() =>
+            onPageChange &&
+            onPageChange(table.getState().pagination.pageIndex + 1)
+          }
           disabled={!table.getCanNextPage()}
         >
           Siguiente
