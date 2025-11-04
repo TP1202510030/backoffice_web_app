@@ -22,7 +22,8 @@ export const ApiClientType = {
  */
 export const AppRoutes = {
   LOGIN: "/login",
-  DASHBOARD: "/dashboard",
   COMPANIES: "/companies",
-  USERS: "/users",
+  COMPANIES_GROW_ROOMS: (companyId: number) =>
+    `/companies/${companyId}/grow-rooms`,
+  COMPANIES_USERS: (companyId: number) => `/companies/${companyId}/users`,
 };

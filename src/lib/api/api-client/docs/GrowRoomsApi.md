@@ -5,11 +5,10 @@ All URIs are relative to *http://localhost:3000*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**createGrowRoom**](#creategrowroom) | **POST** /api/v1/grow-rooms | Create a new grow room and provision its IoT device|
-|[**deleteGrowRoom**](#deletegrowroom) | **DELETE** /api/v1/{growRoomId} | Delete a grow room|
+|[**deleteGrowRoom**](#deletegrowroom) | **DELETE** /api/v1/grow-rooms/{growRoomId} | Delete a grow room|
 |[**getGrowRoomById**](#getgrowroombyid) | **GET** /api/v1/grow-rooms/{growRoomId} | Get a grow room by ID|
 |[**getGrowRoomsByCompanyId**](#getgrowroomsbycompanyid) | **GET** /api/v1/companies/{companyId}/grow-rooms | Get grow rooms by company ID|
-|[**patchGrowRoom**](#patchgrowroom) | **PATCH** /api/v1/{growRoomId} | Patch a grow room|
-|[**updateGrowRoom**](#updategrowroom) | **PUT** /api/v1/grow-rooms/{growRoomId} | Update grow room|
+|[**patchGrowRoom**](#patchgrowroom) | **PATCH** /api/v1/grow-rooms/{growRoomId} | Patch a grow room|
 
 # **createGrowRoom**
 > DeviceCredentialsResource createGrowRoom(createGrowRoomResource)
@@ -285,62 +284,6 @@ const { status, data } = await apiInstance.patchGrowRoom(
 |**200** | Grow room updated successfully |  -  |
 |**400** | Invalid input data |  -  |
 |**403** | Forbidden. User is not an admin. |  -  |
-|**404** | Grow room not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **updateGrowRoom**
-> GrowRoomResource updateGrowRoom(updateGrowRoomResource)
-
-Update grow room
-
-### Example
-
-```typescript
-import {
-    GrowRoomsApi,
-    Configuration,
-    UpdateGrowRoomResource
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new GrowRoomsApi(configuration);
-
-let growRoomId: number; // (default to undefined)
-let updateGrowRoomResource: UpdateGrowRoomResource; //
-
-const { status, data } = await apiInstance.updateGrowRoom(
-    growRoomId,
-    updateGrowRoomResource
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **updateGrowRoomResource** | **UpdateGrowRoomResource**|  | |
-| **growRoomId** | [**number**] |  | defaults to undefined|
-
-
-### Return type
-
-**GrowRoomResource**
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | Grow room updated |  -  |
 |**404** | Grow room not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

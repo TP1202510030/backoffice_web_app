@@ -50,7 +50,7 @@ export function LoginForm() {
       loading: "Iniciando sesión...",
       success: () => {
         setTimeout(() => {
-          window.location.href = AppRoutes.DASHBOARD;
+          window.location.href = AppRoutes.COMPANIES;
         }, 500);
         return "¡Inicio de sesión exitoso!";
       },
