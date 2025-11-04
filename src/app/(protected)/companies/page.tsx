@@ -1,5 +1,4 @@
 import { CompanyList } from "./_components/company-list";
-import { Button } from "@/components/ui/button";
 
 export default function CompaniesPage() {
   return (

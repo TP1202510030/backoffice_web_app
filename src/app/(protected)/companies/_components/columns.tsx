@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef, RowData } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { CompanyResource } from "@/lib/api/api-client";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
